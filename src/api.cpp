@@ -48,21 +48,28 @@ bool api::validate() {
 
 void api::parse() {
 
-    for (uint i=0; i<def->options.size(); i++) {
-        if (body.find("/"+def->options[i]+"/") < body.length()) {
-            option = def->options[i];
-        }
+    // Extract the query string from the API request
+    size_t queryStart = body.find('?');
+    size_t protocolEnd = body.find("HTTP/");
+    if (queryStart == string::npos || (protocolEnd != string::npos && queryStart > protocolEnd)) {
+        // cout << "No object found in the API request." << endl;
+        return;
     }
 
-    for (uint i=0; i<def->keys.size(); i++) {
-        string key = def->keys[i]+"=";
-        string value;
-        if (body.find(key) < body.length()) {
-            value = body.substr(body.find(key)+key.length(),  body.find('&',body.find(key)+key.length())-body.find(key)-key.length() < body.find(' ',body.find(key)+key.length())-body.find(key)-key.length() ? body.find('&',body.find(key)+key.length())-body.find(key)-key.length() : body.find(' ',body.find(key)+key.length())-body.find(key)-key.length());
-        }
-        object[def->keys[i]] = value;
-    }
+    size_t queryStringStart = (queryStart != string::npos) ? queryStart + 1 : 0;
+    string queryString = body.substr(queryStringStart, protocolEnd - queryStringStart);
 
+    // Parse the query string and extract key-value pairs
+    istringstream iss(queryString);
+    string parameter;
+    while (getline(iss, parameter, '&')) {
+        size_t equalSignPos = parameter.find('=');
+        if (equalSignPos != string::npos) {
+            string key = parameter.substr(0, equalSignPos);
+            string value = parameter.substr(equalSignPos + 1);
+            object[key] = value;
+        }
+    }
 }
 
 void api::format() {

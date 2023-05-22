@@ -17,7 +17,7 @@ int main() {
     
     // cout << myDef.val_matrix["delete"].empty();
 
-    api myApi(&myDef, "GET /update/?id=1&value=true HTTP/1.1");
+    api myApi(&myDef, "GET /update/?id=1&value=tru eHTTP/1.1\n");
 
     cout << myApi.object["value"];
 
