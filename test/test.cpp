@@ -6,20 +6,42 @@ using namespace std;
 
 int main() {
 
-    defapi myDef({"add", "delete", "update"}, {"id", "key", "value"});
+    defapi myApi({"GET"}, {"add", "delete", "update"}, {"id", "key", "value"});
+    myApi.necessary("add", {"id", "key", "value"});
+    myApi.necessary("delete", {"id"});
+    myApi.necessary("update", {"id"});
+    myApi.necessary("update", {"value"});
 
-    // cout << myDef.keys[2];
+    // api uf(&myApi, "GET", "/delete", {{"id", "4"}}, "bay");
 
-    myDef.necessary("add", {"id", "key", "value"});
-    myDef.necessary("delete", {"id"});
-    myDef.necessary("update", {"id"});
-    myDef.necessary("update", {"value"});
-    
-    // cout << myDef.val_matrix["delete"].empty();
+    // http myHttp(&myApi, "GET /fghfhf HTTP/1.1\r\nBaba");
+    // //http myHttp(&myApi, "GET /hello/?id=4&post=99 HTTP/1.1\r\nUser-Agent: Mozilla/4.0 (compatible; MSIE5.01; Windows NT)\r\nHost: www.tutorialspoint.com\r\nAccept-Language: en-us\r\nAccept-Encoding: gzip, deflate\r\nConnection: Keep-Alive\r\n\r\nHELLO WORLD\r\n");
 
-    api myApi(&myDef, "GET /update/?id=1&value=tru eHTTP/1.1\n");
 
-    cout << myApi.object["value"];
+    //cout << myHttp.rawall;
 
+    // http_request mojzahtjev("GET", "/baba/maloroga?value1=54", "good" );
+    // mojzahtjev.putheader("Content-type", "text/plain");
+
+    // cout << mojzahtjev.method << " " << mojzahtjev.url << endl << mojzahtjev.raw;
+
+
+    // http_request myres(&uf);
+    // myres.putheader("Content-type", "text/plain");
+
+    http_request myres("GET /delete?id=4 HTTP/1.1\r\nContent-type: text/plain\r\n\n\rBAY");
+
+    // myres.get("HTTP/1.1 200 OK\r\n\r\nnotauth");
+    // myres.get("HTTP/1.1 200 OK");
+
+
+    api uf(&myApi, myres);
+
+    cout << uf.method << " " << uf.path  << " " << uf.body << endl;// << myres.raw;
+    // cout << myres.method << " " << myres.url  << " " << myres.body << endl;// << myres.raw;
+
+
+    for(auto i : uf.params) 
+        cout << i.first << " " << i.second << endl;
 
 }

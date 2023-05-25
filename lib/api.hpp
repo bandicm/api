@@ -5,39 +5,40 @@
 #include <string>
 #include <vector>
 #include <map>
-#include <sstream>
+
+#include "http.hpp"
 
 using namespace std;
 
+class http_request;
+class http_response;
+
+
 class defapi {
     public:
-    vector<string> options;
+    vector<string> methods;
+    vector<string> paths;
     vector<string> keys;
-
     map<string, vector<string>> val_matrix;
 
-    defapi(const vector<string> _options, const vector<string> _keys);
-    void necessary(const string _option, const vector<string> _keys);
-
+    defapi(const vector<string> _methods, const vector<string> _paths, const vector<string> _keys);
+    void necessary(const string _path, const vector<string> _keys);
 };
 
 class api {
     public:
-    defapi *def;
+    defapi* def;
 
-    string option;
-    map<string, string> object;
+    string method;
+    string path;
+    map<string, string> params;
+    string url;
     string body;
 
-    api(defapi *_def, const string _option, const map<string, string> _object);
-    api(defapi *_def, const string _body);
-        
-    private:
+    api(defapi* _def, const string _method, const string _path, const map<string, string> _params = {}, const string _body = {});
+    api(defapi* _def, const http_request _req);
     bool validate();
-    void parse();  // čitaj api
-    void format(); // šalji api
 
-    // ~api();
 };
 
 #endif
