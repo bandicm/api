@@ -1,7 +1,5 @@
 #include "../lib/http.hpp"
 
-// radi
-
 http_request::http_request(const string _method, const string _url, const string _body) {
     method = _method;
     url = _url;
@@ -9,7 +7,6 @@ http_request::http_request(const string _method, const string _url, const string
     mold();
 }
 
-// radi
 http_request::http_request(const api *_api) {
     method = _api->method;
     url = _api->url;
@@ -17,13 +14,11 @@ http_request::http_request(const api *_api) {
     mold();
 }
 
-// radi
 http_request::http_request(const string _raw) {
     raw = _raw;
     parse();
 }
 
-// radi
 void http_request::parse() {
     method = raw.substr(0, raw.find(" "));
     url = raw.substr(raw.find("/"), raw.find("HTTP/")-raw.find("/"));
@@ -38,7 +33,6 @@ void http_request::parse() {
         headers.insert(make_pair(key, value));
     }
 
-    // ne radi za specijalan slučaj kada nema zaglavlja
     if ((size_t)raw.find("\r\n\r\n") == (size_t)raw.find("\r\n"))
         body = raw.substr(raw.find("\r\n\r\n")+4, raw.length()-raw.find("\r\n\r\n"));
 
@@ -60,7 +54,6 @@ void http_request::putheaders(const map<string, string> _headers) {
 /**
  * http zahtjev formiranje raw 
 */
-// radi
 
 void http_request::mold() {
 
@@ -88,12 +81,12 @@ void http_response::get(const string _raw) {
 }
 
 /**
- * Nakon 
+ * 
 */
 
 
 void http_response::mold() {
-    raw = "HTTP/1.1 200 OK\r\n";
+    raw = "HTTP/1.1 200 OK\r\n"; // implementirati status
     if (!headers.empty()) {
         raw += '?';
         for (auto i : headers) {
@@ -104,7 +97,6 @@ void http_response::mold() {
     raw += "\r\n" + body;
 }
 
-// radi
 
 void http_response::parse() {
 

@@ -10,7 +10,6 @@ void defapi::necessary(const string _path, const vector<string> _keys) {
     val_matrix[_path].insert( val_matrix[_path].end(), _keys.begin(), _keys.end());
 }
 
-// radi
 api::api(defapi* _def, const string _method, const string _path, const map<string, string> _params, const string _body) {
     def = _def;
     method = _method;
@@ -28,11 +27,10 @@ api::api(defapi* _def, const string _method, const string _path, const map<strin
     body = _body;
 
     if (!validate()) {
-        cout << "Nije ispravan API" << endl;
+        throw "[ERROR] The API is not correct ";
     }
 }
 
-// radi
 api::api(defapi* _def, const http_request _req) {
     def = _def;
     method = _req.method;
