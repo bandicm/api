@@ -27,7 +27,7 @@ api::api(defapi* _def, const string _method, const string _path, const map<strin
     body = _body;
 
     if (!validate()) {
-        throw "[ERROR] The API is not correct ";
+        throw string("[ERROR] The API is not correct ");
     }
 }
 

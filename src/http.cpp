@@ -21,7 +21,7 @@ http_request::http_request(const string _raw) {
 
 void http_request::parse() {
     method = raw.substr(0, raw.find(" "));
-    url = raw.substr(raw.find("/"), raw.find("HTTP/")-raw.find("/"));
+    url = raw.substr(raw.find("/"), raw.find("HTTP/")-raw.find("/")-1);
 
     string _headers = raw.substr(raw.find("\r\n")+2, raw.find("\r\n\r\n")-raw.find("\r\n"));
     while (!_headers.empty()) {
