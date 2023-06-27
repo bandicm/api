@@ -12,7 +12,13 @@ int main() {
     myApi.necessary("update", {"id"});
     myApi.necessary("update", {"value"});
 
-    // api uf(&myApi, "GET", "/delete", {{"id", "4"}}, "bay");
+    try {
+
+        api uf(&myApi, "GET", "delete", {make_pair("id", "4")}, "bay");
+
+    } catch (string err) {
+        cout << err << endl;
+    }
 
     // http myHttp(&myApi, "GET /fghfhf HTTP/1.1\r\nBaba");
     // //http myHttp(&myApi, "GET /hello/?id=4&post=99 HTTP/1.1\r\nUser-Agent: Mozilla/4.0 (compatible; MSIE5.01; Windows NT)\r\nHost: www.tutorialspoint.com\r\nAccept-Language: en-us\r\nAccept-Encoding: gzip, deflate\r\nConnection: Keep-Alive\r\n\r\nHELLO WORLD\r\n");
@@ -35,13 +41,13 @@ int main() {
     // myres.get("HTTP/1.1 200 OK");
 
 
-    api uf(&myApi, myres);
+    // api uf(&myApi, myres);
 
-    cout << uf.method << " " << uf.path  << " " << uf.body << endl;// << myres.raw;
+    // cout << uf.method << " " << uf.path  << " " << uf.body << endl;// << myres.raw;
     // cout << myres.method << " " << myres.url  << " " << myres.body << endl;// << myres.raw;
 
 
-    for(auto i : uf.params) 
-        cout << i.first << " " << i.second << endl;
+    // for(auto i : uf.params) 
+    //     cout << i.first << " " << i.second << endl;
 
 }

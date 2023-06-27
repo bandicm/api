@@ -20,10 +20,15 @@ http_request::http_request(const string _raw) {
 }
 
 void http_request::parse() {
+
+    if (raw.empty()) {
+        return;
+    }
+
     method = raw.substr(0, raw.find(" "));
     url = raw.substr(raw.find("/"), raw.find("HTTP/")-raw.find("/")-1);
 
-    string _headers = raw.substr(raw.find("\r\n")+2, raw.find("\r\n\r\n")-raw.find("\r\n"));
+    string _headers = raw.substr(raw.find("\r\n")+2, raw.find("\r\n\r\n")-raw.find("\r\n")-2);
     while (!_headers.empty()) {
         string key, value;
         key = _headers.substr(0, _headers.find(": "));
@@ -34,10 +39,10 @@ void http_request::parse() {
     }
 
     if ((size_t)raw.find("\r\n\r\n") == (size_t)raw.find("\r\n"))
-        body = raw.substr(raw.find("\r\n\r\n")+4, raw.length()-raw.find("\r\n\r\n"));
+        body = raw.substr(raw.find("\r\n\r\n")+4, raw.length()-raw.find("\r\n\r\n")-4);
 
     else if ((size_t)raw.find("\r\n\r\n") < raw.length())
-        body = raw.substr(raw.find("\r\n\r\n")+4, raw.find("\r\n")-raw.find("\r\n\r\n"));
+        body = raw.substr(raw.find("\r\n\r\n")+4, raw.find("\r\n")-raw.find("\r\n\r\n")-4);
 
 }
 
@@ -46,7 +51,7 @@ void http_request::putheader(const string _key, const string _value) {
     mold();
 }
 
-void http_request::putheaders(const map<string, string> _headers) {
+void http_request::setheaders(const map<string, string> _headers) {
     headers = _headers;
     mold();
 }
@@ -100,11 +105,15 @@ void http_response::mold() {
 
 void http_response::parse() {
 
+    if (raw.empty()) {
+        return;
+    }
+
     string protocol = raw.substr(0, raw.find(" "));
     status = raw.substr(raw.find(" ")+1, raw.find(" ",raw.find(" ")+1)-raw.find(" ")-1);
 
     if ((size_t)raw.find("\r\n") < raw.length()) {
-        string _headers = raw.substr(raw.find("\r\n")+2, raw.find("\r\n\r\n")-raw.find("\r\n"));
+        string _headers = raw.substr(raw.find("\r\n")+2, raw.find("\r\n\r\n")-raw.find("\r\n")-2);
         while (!_headers.empty()) {
             string key, value;
             key = _headers.substr(0, _headers.find(": "));
@@ -116,9 +125,9 @@ void http_response::parse() {
     }
     // ne radi za specijalan slučaj kada nema zaglavlja
     if ((size_t)raw.find("\r\n\r\n") == (size_t)raw.find("\r\n"))
-        body = raw.substr(raw.find("\r\n\r\n")+4, raw.length()-raw.find("\r\n\r\n"));
+        body = raw.substr(raw.find("\r\n\r\n")+4, raw.length()-raw.find("\r\n\r\n")-4);
 
     else if ((size_t)raw.find("\r\n\r\n") < raw.length())
-        body = raw.substr(raw.find("\r\n\r\n")+4, raw.find("\r\n")-raw.find("\r\n\r\n"));
+        body = raw.substr(raw.find("\r\n\r\n")+4, raw.find("\r\n")-raw.find("\r\n\r\n")-4);
 
 }

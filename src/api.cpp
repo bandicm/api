@@ -26,9 +26,9 @@ api::api(defapi* _def, const string _method, const string _path, const map<strin
 
     body = _body;
 
-    if (!validate()) {
-        throw string("[ERROR] The API is not correct ");
-    }
+    // if (!validate()) {
+    //     throw string("[ERROR] The API is not correct ");
+    // }
 }
 
 api::api(defapi* _def, const http_request _req) {
@@ -63,18 +63,20 @@ api::api(defapi* _def, const http_request _req) {
 }
 
 
-bool api::validate() {
-    bool isValidate = true;
+// bool api::validate() {
+//     bool isValidate = true;
+//     cout << "Validiramo " << endl;
+//     // api validacija ključeva
+//     for (uint i=0; i<def->val_matrix[path].size(); i++) {
+//         cout << def->val_matrix[path][i] << " " << params[def->val_matrix[path][i]] << endl;
+//         if (params[def->val_matrix[path][i]].empty()) {
+//             cout << "Ptazan " << endl;
 
-    // api validacija ključeva
-    for (uint i=0; i<def->val_matrix[path].size(); i++) {
-        def->val_matrix[path][i];
-        if (params[def->val_matrix[path][i]].empty()) {
-            isValidate = false;
-            break;           
-        }
-    }
+//             isValidate = false;
+//             break;           
+//         }
+//     }
 
-    return isValidate;
-}
+//     return isValidate;
+// }
 

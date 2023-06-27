@@ -35,9 +35,11 @@ class api {
     string url;
     string body;
 
+    // odlazni api zahtjev
     api(defapi* _def, const string _method, const string _path, const map<string, string> _params = {}, const string _body = {});
+    // dolazni api zahjtev
     api(defapi* _def, const http_request _req);
-    bool validate();
+    // bool validate();
 
 };
 

@@ -30,7 +30,7 @@ class http_request {
 
     //bool validate();
     void putheader(const string _key, const string _value);
-    void putheaders(const map<string, string> _headers);
+    void setheaders(const map<string, string> _headers);
     void parse();
     void mold();
 
@@ -51,8 +51,8 @@ class http_response {
     void get(const string _raw);
 
     //bool validate();
-    void putheader(const string _key, const string _value);
-    void putheaders(const map<string, string> _headers);
+    // void putheader(const string _key, const string _value);
+    // void putheaders(const map<string, string> _headers);
     
     void mold();   // za slanje
     void parse();  // čitaj http
