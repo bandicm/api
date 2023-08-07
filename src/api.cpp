@@ -1,17 +1,6 @@
 #include "../lib/api.hpp"
 
-defapi::defapi(const vector<string> _methods, const vector<string> _paths, const vector<string> _keys) {
-    methods = _methods;
-    paths = _paths;
-    keys = _keys;
-}
-
-void defapi::necessary(const string _path, const vector<string> _keys) {
-    val_matrix[_path].insert( val_matrix[_path].end(), _keys.begin(), _keys.end());
-}
-
-api::api(defapi* _def, const string _method, const string _path, const map<string, string> _params, const string _body) {
-    def = _def;
+api::api(const string _method, const string _path, const map<string, string> _params, const string _body) {
     method = _method;
     path = _path;   
     url = path;
@@ -26,13 +15,9 @@ api::api(defapi* _def, const string _method, const string _path, const map<strin
 
     body = _body;
 
-    // if (!validate()) {
-    //     throw string("[ERROR] The API is not correct ");
-    // }
 }
 
-api::api(defapi* _def, const http_request _req) {
-    def = _def;
+api::api(const http_request _req) {
     method = _req.method;
     //path = _path;   
     url = _req.url;
@@ -56,27 +41,4 @@ api::api(defapi* _def, const http_request _req) {
 
     body = _req.body;
 
-    // if (!validate()) {
-    //     cout << "Nije ispravan API" << endl;
-    // }
-
 }
-
-
-// bool api::validate() {
-//     bool isValidate = true;
-//     cout << "Validiramo " << endl;
-//     // api validacija ključeva
-//     for (uint i=0; i<def->val_matrix[path].size(); i++) {
-//         cout << def->val_matrix[path][i] << " " << params[def->val_matrix[path][i]] << endl;
-//         if (params[def->val_matrix[path][i]].empty()) {
-//             cout << "Ptazan " << endl;
-
-//             isValidate = false;
-//             break;           
-//         }
-//     }
-
-//     return isValidate;
-// }
-
