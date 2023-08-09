@@ -6,6 +6,7 @@
 #include <vector>
 #include <map>
 
+// #include "elementary.hpp"
 #include "http.hpp"
 
 using namespace std;
@@ -36,7 +37,7 @@ class api {
     string body;
 
     // odlazni api zahtjev
-    api(defapi* _def, const string _method, const string _path, const map<string, string> _params = {}, const string _body = {});
+    api(defapi* _def, const http_method _method, const string _path, const map<string, string> _params = {}, const string _body = {});
     // dolazni api zahjtev
     api(defapi* _def, const http_request _req);
     // bool validate();

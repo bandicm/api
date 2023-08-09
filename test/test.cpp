@@ -14,7 +14,25 @@ int main() {
 
     try {
 
-        api uf(&myApi, "GET", "delete", {make_pair("id", "4")}, "bay");
+        api uf(&myApi, GET, "delete", {make_pair("id", "4")}, "bay");
+        http_request myreq(&uf);
+        myreq.putheader("Content-type", "text/plain");
+
+        cout << myreq.raw << endl;
+
+        http_response myres("HTTP/1.1 200 OK\r\n\r\nnotauth");
+        cout << myres.protocol << endl;
+        cout << myres.status << endl;
+        // cout << myres.headers << endl;
+        cout << myres.body << endl;
+
+
+        http_response myres2(OK, "nnotauth" );
+        cout << myres2.protocol << endl;
+        cout << myres2.status << endl;
+        // cout << myres2.headers << endl;
+        cout << myres2.body << endl;
+
 
     } catch (string err) {
         cout << err << endl;
@@ -33,9 +51,9 @@ int main() {
 
 
     // http_request myres(&uf);
-    // myres.putheader("Content-type", "text/plain");
+    
 
-    http_request myres("GET /delete?id=4 HTTP/1.1\r\nContent-type: text/plain\r\n\n\rBAY");
+    // http_request myres("GET /delete?id=4 HTTP/1.1\r\nContent-type: text/plain\r\n\n\rBAY");
 
     // myres.get("HTTP/1.1 200 OK\r\n\r\nnotauth");
     // myres.get("HTTP/1.1 200 OK");
