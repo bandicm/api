@@ -1,16 +1,18 @@
 #include "../lib/http.hpp"
 
-http_request::http_request(const string _method, const string _url, const string _body) {
-    method = _method;
+http_request::http_request(const http_method _method, const string _url, const string _body, const string _protocol) {
+    method = http_method_to_str(_method);
     url = _url;
     body = _body;
+    protocol = set_protcol(_protocol);
     mold();
 }
 
-http_request::http_request(const api *_api) {
+http_request::http_request(const api *_api,  const string _protocol) {
     method = _api->method;
     url = _api->url;
     body = _api->body;
+    protocol = set_protcol(_protocol);
     mold();
 }
 
@@ -74,13 +76,15 @@ void http_request::mold() {
     raw += "\r\n" + body;
 }
 
-void http_response::send(const string _body) {
+http_response::http_response(const http_response_code _status, const string _body, const string _protocol) {
+    status = to_string(_status) + " " + http_response_code_txt(_status);
     body = _body;
+    protocol = set_protcol(_protocol);
     mold();        
 }
 
 
-void http_response::get(const string _raw) {
+http_response::http_response(const string _raw) {
     raw = _raw;
     parse();
 }
@@ -91,7 +95,7 @@ void http_response::get(const string _raw) {
 
 
 void http_response::mold() {
-    raw = "HTTP/1.1 200 OK\r\n"; // implementirati status
+    raw = protocol + " " + status + "\r\n"; //"HTTP/1.1 200 OK\r\n"; // implementirati status
     if (!headers.empty()) {
         raw += '?';
         for (auto i : headers) {
@@ -130,4 +134,15 @@ void http_response::parse() {
     else if ((size_t)raw.find("\r\n\r\n") < raw.length())
         body = raw.substr(raw.find("\r\n\r\n")+4, raw.find("\r\n")-raw.find("\r\n\r\n")-4);
 
+}
+
+static string set_protcol(const string _protocol) {
+    string protocol;
+    if (_protocol == "1.0" || _protocol == "1.1" || _protocol == "2.0") {
+        protocol = "HTTP/" + _protocol;
+    }
+    else { 
+        protocol = "HTTP/1.1";
+    }
+    return protocol;
 }

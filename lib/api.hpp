@@ -6,6 +6,7 @@
 #include <vector>
 #include <map>
 
+// #include "elementary.hpp"
 #include "http.hpp"
 
 using namespace std;
@@ -22,7 +23,7 @@ class api {
     string body;
 
     // odlazni api zahtjev
-    api(const string _method, const string _path, const map<string, string> _params = {}, const string _body = {});
+    api(const http_method _method, const string _path, const map<string, string> _params = {}, const string _body = {});
     // dolazni api zahjtev
     api(const http_request _req);
 };

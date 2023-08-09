@@ -5,6 +5,7 @@
 #include <string>
 #include <map>
 
+#include "elementary.hpp"
 #include "api.hpp"
 
 using namespace std;
@@ -13,6 +14,7 @@ class api;
 
 class http_request {
     public:
+    string protocol;
     string method;
     string url;
     map<string, string> headers;
@@ -21,8 +23,8 @@ class http_request {
 
     // konstruktori zahtjeva
     // odlazni
-    http_request(const string _method, const string _url, const string _body = "");
-    http_request(const api *_api);
+    http_request(const http_method _method, const string _url, const string _body = "", const string _protocol = "1.1");
+    http_request(const api *_api, const string _protocol = "1.1");
     //dolazni
     http_request(const string _raw);
 
@@ -36,6 +38,7 @@ class http_request {
 
 class http_response {
     public:
+    string protocol;
     string status;
     map<string, string> headers;
     string body;
@@ -43,12 +46,18 @@ class http_response {
 
     //konstruktor odgovora
     // odlazni
-    void send(const string _body);
+    http_response(const http_response_code _status, const string _body, const string _protocol = "1.1");
     // dolaznih
-    void get(const string _raw);
+    http_response(const string _raw);
+
+    //bool validate();
+    // void putheader(const string _key, const string _value);
+    // void putheaders(const map<string, string> _headers);
     
     void mold();   // za slanje
     void parse();  // čitaj http
 };
+
+static string set_protcol(const string _protocol);
 
 #endif

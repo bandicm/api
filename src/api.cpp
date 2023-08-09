@@ -1,7 +1,7 @@
 #include "../lib/api.hpp"
 
-api::api(const string _method, const string _path, const map<string, string> _params, const string _body) {
-    method = _method;
+api::api(const http_method _method, const string _path, const map<string, string> _params, const string _body) {
+    method = http_method_to_str(_method);
     path = _path;   
     url = path;
 
