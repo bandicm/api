@@ -8,23 +8,17 @@ int main() {
 
     try {
 
-<<<<<<< HEAD
-        api uf(GET, "delete", {make_pair("id", "4")}, "bay");
+        api uf(GET, "/delete", {make_pair("id", "4")}, "bay");
         http_request myreq(&uf);
-        myreq.putheader("Content-type", "text/plain");
-=======
-        // api uf(&myApi, GET, "/delete", {make_pair("id", "4")}, "bay");
-        // http_request myreq(&uf);
-        // myreq.header("Content-type", "text/plain");
->>>>>>> http-status-code
+        myreq.header("Content-type", "text/plain");
 
-        // cout << myreq.raw << endl;
+        cout << myreq.raw << endl;
 
-        // cout << myreq.protocol << endl;
-        // // cout << myreq.status << endl;
-        // for(auto i : myreq.headers) 
-        //     cout << i.first << " " << i.second << endl;
-        // cout << myreq.body << endl;
+        cout << myreq.protocol << endl;
+        // cout << myreq.status << endl;
+        for(auto i : myreq.headers) 
+            cout << i.first << " " << i.second << endl;
+        cout << myreq.body << endl;
 
 
         http_response myres2(OK, "nnotauth", "1.0" );
@@ -33,7 +27,9 @@ int main() {
         cout << myres2.headers["Content-Length"] << endl;
         cout << myres2.body << endl;
 
-
+    } catch (const string err) {
+        cout << err << endl;
+    }
     
 
     // http myHttp(&myApi, "GET /fghfhf HTTP/1.1\r\nBaba");

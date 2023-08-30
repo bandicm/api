@@ -15,7 +15,6 @@ class api;
 class http_request {
     public:
     string protocol;
-    string protocol;
     string method;
     string url;
     map<string, string> headers;

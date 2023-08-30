@@ -86,8 +86,7 @@ http_response::http_response(const http_response_code _status, const string _bod
     status = to_string(_status) + " " + http_response_code_txt(_status);
     if (!_body.empty()) {
         body = _body;
-        // kad merge s header-response branch možeš omogućit ovu liniju
-        // this->header("Content-Length", to_string(body.length()));
+        this->header("Content-Length", to_string(body.length()));
     }
     protocol = get_protocol(_protocol);
     mold();        
