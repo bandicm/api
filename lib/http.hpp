@@ -15,6 +15,7 @@ class api;
 
 class http_request {
     public:
+    string protocol;
     string method;
     string url;
     map<string, string> headers;
@@ -23,19 +24,21 @@ class http_request {
 
     // konstruktori zahtjeva
     // odlazni
-    http_request(const http_method _method, const string _url, const string _body = "");
-    http_request(const api *_api);
+    http_request(const http_method _method, const string _url, const string _body = "", const string _protocol = "1.1");
+    http_request(const api *_api, const string _protocol = "1.1");
     //dolazni
     http_request(const string _raw);
 
     //bool validate();
-    void putheader(const string _key, const string _value);
-    void setheaders(const map<string, string> _headers);
+    void header(const string _key, const string _value);
+    void header(const map<string, string> _headers);
+    private:
     void parse();
     void mold();
 
 };
 
+static string get_protocol(const string _protocol);
 
 class http_response {
     public:
@@ -47,7 +50,7 @@ class http_response {
 
     //konstruktor odgovora
     // odlazni
-    http_response(const http_response_code _status, const string _body, const string _protocol = "1.1");
+    http_response(const http_response_code _status, const string _body = "", const string _protocol = "1.1");
     // dolaznih
     http_response(const string _raw);
 
@@ -55,6 +58,7 @@ class http_response {
     // void putheader(const string _key, const string _value);
     // void putheaders(const map<string, string> _headers);
     
+    private:
     void mold();   // za slanje
     void parse();  // čitaj http
 };

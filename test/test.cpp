@@ -14,23 +14,23 @@ int main() {
 
     try {
 
-        api uf(&myApi, GET, "delete", {make_pair("id", "4")}, "bay");
-        http_request myreq(&uf);
-        myreq.putheader("Content-type", "text/plain");
+        // api uf(&myApi, GET, "/delete", {make_pair("id", "4")}, "bay");
+        // http_request myreq(&uf);
+        // myreq.header("Content-type", "text/plain");
 
-        cout << myreq.raw << endl;
+        // cout << myreq.raw << endl;
 
-        http_response myres("HTTP/1.1 200 OK\r\n\r\nnotauth");
-        cout << myres.protocol << endl;
-        cout << myres.status << endl;
-        // cout << myres.headers << endl;
-        cout << myres.body << endl;
+        // cout << myreq.protocol << endl;
+        // // cout << myreq.status << endl;
+        // for(auto i : myreq.headers) 
+        //     cout << i.first << " " << i.second << endl;
+        // cout << myreq.body << endl;
 
 
         http_response myres2(OK, "nnotauth" );
         cout << myres2.protocol << endl;
         cout << myres2.status << endl;
-        // cout << myres2.headers << endl;
+        cout << myres2.headers["Content-Length"] << endl;
         cout << myres2.body << endl;
 
 

@@ -1,16 +1,24 @@
 #include "../lib/http.hpp"
 
-http_request::http_request(const http_method _method, const string _url, const string _body) {
+http_request::http_request(const http_method _method, const string _url, const string _body, const string _protocol) {
     method = http_method_to_str(_method);
     url = _url;
-    body = _body;
+    protocol = get_protocol(_protocol);
+    if (!_body.empty()) {
+        body = _body;
+        this->header("Content-Length", to_string(body.length()));
+    }
     mold();
 }
 
-http_request::http_request(const api *_api) {
+http_request::http_request(const api *_api, const string _protocol) {
     method = _api->method;
     url = _api->url;
-    body = _api->body;
+    protocol = get_protocol(_protocol);
+    if (!_api->body.empty()) {
+        body = _api->body;
+        this->header("Content-Length", to_string(body.length()));
+    }
     mold();
 }
 
@@ -46,12 +54,12 @@ void http_request::parse() {
 
 }
 
-void http_request::putheader(const string _key, const string _value) {
+void http_request::header(const string _key, const string _value) {
     headers[_key] = _value;
     mold();
 }
 
-void http_request::setheaders(const map<string, string> _headers) {
+void http_request::header(const map<string, string> _headers) {
     headers = _headers;
     mold();
 }
@@ -63,7 +71,7 @@ void http_request::setheaders(const map<string, string> _headers) {
 void http_request::mold() {
 
     raw = method.empty() ? "GET" : method;
-    raw += " " + url + " HTTP/1.1\r\n";
+    raw += " " + url + " " + protocol + "\r\n";
 
     if (!headers.empty()) {
         for (auto i : headers) {
@@ -76,14 +84,25 @@ void http_request::mold() {
 
 http_response::http_response(const http_response_code _status, const string _body, const string _protocol) {
     status = to_string(_status) + " " + http_response_code_txt(_status);
-    body = _body;
+    if (!_body.empty()) {
+        body = _body;
+        // kad merge s header-response branch možeš omogućit ovu liniju
+        // this->header("Content-Length", to_string(body.length()));
+    }
+    protocol = get_protocol(_protocol);
+    mold();        
+}
+
+
+static string get_protocol(const string _protocol) {
+    string protocol;
     if (_protocol == "1.0" || _protocol == "1.1" || _protocol == "2.0") {
         protocol = "HTTP/" + _protocol;
     }
     else { 
         protocol = "HTTP/1.1";
     }
-    mold();        
+    return protocol;
 }
 
 
