@@ -89,15 +89,20 @@ http_response::http_response(const string _raw) {
     parse();
 }
 
-/**
- * 
-*/
+void http_response::header(const string _key, const string _value) {
+    headers[_key] = _value;
+    mold();
+}
+
+void http_response::header(const map<string, string> _headers) {
+    headers = _headers;
+    mold();
+}
 
 
 void http_response::mold() {
     raw = protocol + " " + status + "\r\n"; //"HTTP/1.1 200 OK\r\n"; // implementirati status
     if (!headers.empty()) {
-        raw += '?';
         for (auto i : headers) {
             raw += i.first + ": " + i.second + "\r\n"; 
         }

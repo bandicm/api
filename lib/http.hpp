@@ -51,8 +51,8 @@ class http_response {
     http_response(const string _raw);
 
     //bool validate();
-    // void putheader(const string _key, const string _value);
-    // void putheaders(const map<string, string> _headers);
+    void header(const string _key, const string _value);
+    void header(const map<string, string> _headers);
     
     void mold();   // za slanje
     void parse();  // čitaj http

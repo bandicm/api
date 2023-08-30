@@ -49,19 +49,15 @@ int main() {
 
     // myres.get("HTTP/1.1 200 OK\r\n\r\nnotauth");
     // myres.get("HTTP/1.1 200 OK");
-
+    // myres.header("Content-type", "text/plain");
 
     // api uf(&myApi, myres);
 
-    // cout << uf.method << " " << uf.path  << " " << uf.body << endl;
-    // cout << myres.method << " " << myres.url  << " " << myres.body << endl << myres.raw << endl;
+    // cout << uf.method << " " << uf.path  << " " << uf.body << endl;// << myres.raw;
+    // cout << myres.method << " " << myres.url  << " " << myres.body << endl;// << myres.raw;
 
 
     // for(auto i : uf.params) 
     //     cout << i.first << " " << i.second << endl;
-
-    } catch (string err) {
-        cout << err << endl;
-    }
 
 }
