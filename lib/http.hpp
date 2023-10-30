@@ -8,6 +8,9 @@
 #include "elementary.hpp"
 #include "api.hpp"
 
+namespace marcelb {
+
+
 using namespace std;
 
 class api;
@@ -63,5 +66,7 @@ class http_response {
 };
 
 static string set_protcol(const string _protocol);
+
+}
 
 #endif

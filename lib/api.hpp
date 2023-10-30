@@ -9,6 +9,8 @@
 // #include "elementary.hpp"
 #include "http.hpp"
 
+namespace marcelb {
+
 using namespace std;
 
 class http_request;
@@ -27,5 +29,7 @@ class api {
     // dolazni api zahjtev
     api(const http_request _req);
 };
+
+}
 
 #endif

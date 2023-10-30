@@ -4,6 +4,8 @@
 #include <string>
 using namespace std;
 
+namespace marcelb {
+
 typedef enum {
     GET=0, POST=1, PUT=2, DELETE=3, PATCH=4, get=GET, post=POST, put=PUT, del=DELETE, patch=PATCH
 } http_method;
@@ -108,5 +110,7 @@ typedef enum {
 
 
 string http_response_code_txt(uint code);
+
+}
 
 #endif

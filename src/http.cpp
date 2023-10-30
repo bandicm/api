@@ -1,6 +1,6 @@
 #include "../lib/http.hpp"
 
-http_request::http_request(const http_method _method, const string _url, const string _body, const string _protocol) {
+marcelb::http_request::http_request(const http_method _method, const string _url, const string _body, const string _protocol) {
     method = http_method_to_str(_method);
     url = _url;
     protocol = get_protocol(_protocol);
@@ -11,7 +11,7 @@ http_request::http_request(const http_method _method, const string _url, const s
     mold();
 }
 
-http_request::http_request(const api *_api,  const string _protocol) {
+marcelb::http_request::http_request(const api *_api,  const string _protocol) {
     method = _api->method;
     url = _api->url;
     protocol = get_protocol(_protocol);
@@ -22,12 +22,12 @@ http_request::http_request(const api *_api,  const string _protocol) {
     mold();
 }
 
-http_request::http_request(const string _raw) {
+marcelb::http_request::http_request(const string _raw) {
     raw = _raw;
     parse();
 }
 
-void http_request::parse() {
+void marcelb::http_request::parse() {
 
     if (raw.empty()) {
         return;
@@ -54,12 +54,12 @@ void http_request::parse() {
 
 }
 
-void http_request::header(const string _key, const string _value) {
+void marcelb::http_request::header(const string _key, const string _value) {
     headers[_key] = _value;
     mold();
 }
 
-void http_request::header(const map<string, string> _headers) {
+void marcelb::http_request::header(const map<string, string> _headers) {
     headers = _headers;
     mold();
 }
@@ -68,7 +68,7 @@ void http_request::header(const map<string, string> _headers) {
  * http zahtjev formiranje raw 
 */
 
-void http_request::mold() {
+void marcelb::http_request::mold() {
 
     raw = method.empty() ? "GET" : method;
     raw += " " + url + " " + protocol + "\r\n";
@@ -82,7 +82,7 @@ void http_request::mold() {
     raw += "\r\n" + body;
 }
 
-http_response::http_response(const http_response_code _status, const string _body, const string _protocol) {
+marcelb::http_response::http_response(const http_response_code _status, const string _body, const string _protocol) {
     status = to_string(_status) + " " + http_response_code_txt(_status);
     if (!_body.empty()) {
         body = _body;
@@ -93,7 +93,7 @@ http_response::http_response(const http_response_code _status, const string _bod
 }
 
 
-static string get_protocol(const string _protocol) {
+static string marcelb::get_protocol(const string _protocol) {
     string protocol;
     if (_protocol == "1.0" || _protocol == "1.1" || _protocol == "2.0") {
         protocol = "HTTP/" + _protocol;
@@ -105,23 +105,23 @@ static string get_protocol(const string _protocol) {
 }
 
 
-http_response::http_response(const string _raw) {
+marcelb::http_response::http_response(const string _raw) {
     raw = _raw;
     parse();
 }
 
-void http_response::header(const string _key, const string _value) {
+void marcelb::http_response::header(const string _key, const string _value) {
     headers[_key] = _value;
     mold();
 }
 
-void http_response::header(const map<string, string> _headers) {
+void marcelb::http_response::header(const map<string, string> _headers) {
     headers = _headers;
     mold();
 }
 
 
-void http_response::mold() {
+void marcelb::http_response::mold() {
     raw = protocol + " " + status + "\r\n"; //"HTTP/1.1 200 OK\r\n"; // implementirati status
     if (!headers.empty()) {
         for (auto i : headers) {
@@ -133,7 +133,7 @@ void http_response::mold() {
 }
 
 
-void http_response::parse() {
+void marcelb::http_response::parse() {
 
     if (raw.empty()) {
         return;
@@ -162,7 +162,7 @@ void http_response::parse() {
 
 }
 
-static string set_protcol(const string _protocol) {
+static string marcelb::set_protcol(const string _protocol) {
     string protocol;
     if (_protocol == "1.0" || _protocol == "1.1" || _protocol == "2.0") {
         protocol = "HTTP/" + _protocol;

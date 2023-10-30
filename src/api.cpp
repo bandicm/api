@@ -1,6 +1,6 @@
 #include "../lib/api.hpp"
 
-api::api(const http_method _method, const string _path, const map<string, string> _params, const string _body) {
+marcelb::api::api(const http_method _method, const string _path, const map<string, string> _params, const string _body) {
     method = http_method_to_str(_method);
     path = _path;   
     url = path;
@@ -17,7 +17,7 @@ api::api(const http_method _method, const string _path, const map<string, string
 
 }
 
-api::api(const http_request _req) {
+marcelb::api::api(const http_request _req) {
     method = _req.method;
     //path = _path;   
     url = _req.url;

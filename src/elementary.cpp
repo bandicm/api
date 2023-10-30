@@ -1,6 +1,6 @@
 #include "../lib/elementary.hpp"
 
-string http_method_to_str(http_method methode) {
+string marcelb::http_method_to_str(http_method methode) {
     string methode_str;
     switch (methode) {
         case 0:
@@ -26,7 +26,7 @@ string http_method_to_str(http_method methode) {
 };
 
 
-string http_response_code_txt(uint code) {
+string marcelb::http_response_code_txt(uint code) {
 	switch (code) {
         //####### 1xx - Informational #######
         case 100: return "Continue";
