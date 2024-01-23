@@ -7,7 +7,7 @@ using namespace std;
 namespace marcelb {
 
 typedef enum {
-    GET=0, POST=1, PUT=2, DELETE=3, PATCH=4, get=GET, post=POST, put=PUT, del=DELETE, patch=PATCH
+    GET=0, POST=1, PUT=2, DEL=3, PATCH=4, get=GET, post=POST, put=PUT, del=DEL, patch=PATCH
 } http_method;
 
 string http_method_to_str(http_method methode);
@@ -109,7 +109,7 @@ typedef enum {
 } http_response_code;
 
 
-string http_response_code_txt(uint code);
+string http_response_code_txt(unsigned int code);
 
 }
 
